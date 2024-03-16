@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 require_once('env.php');
 
-$allowed_hosts = array('localhost', 'chandigarhcaterer.in');
+$allowed_hosts = array('api.devzila.com','localhost', 'chandigarhcaterer.in');
 if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
     header($_SERVER['SERVER_PROTOCOL'].' 400 Bad Request');
     exit;
@@ -27,7 +27,7 @@ $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
 $ip = get_client_ip();
 $request_data = mysqli_real_escape_string($conn, json_encode($_REQUEST));
 
-
+print_r($_REQUEST);
 $sql = "INSERT INTO leads (first_name, last_name, email, phone, ip, request_data, created_at, updated_at )
 VALUES ('$first_name', '$last_name', '$email', '$phone', '$ip', '$request_data', now(), now() )";
 
