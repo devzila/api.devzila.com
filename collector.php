@@ -5,6 +5,9 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 require_once('env.php');
 
+
+
+
 $allowed_hosts = array('api.devzila.com','localhost', 'chandigarhcaterer.in');
 if (!isset($_SERVER['HTTP_HOST']) || !in_array($_SERVER['HTTP_HOST'], $allowed_hosts)) {
     header($_SERVER['SERVER_PROTOCOL'].' 400 Bad Request');
@@ -24,6 +27,7 @@ $first_name = mysqli_real_escape_string($conn, $_REQUEST['first_name']);
 $last_name = mysqli_real_escape_string($conn, $_REQUEST['last_name']);
 $email = mysqli_real_escape_string($conn, $_REQUEST['email']);
 $phone = mysqli_real_escape_string($conn, $_REQUEST['phone']);
+$source = mysqli_real_escape_string($conn, $_REQUEST['source']);
 $ip = get_client_ip();
 $request_data = mysqli_real_escape_string($conn, json_encode($_REQUEST));
 
@@ -39,6 +43,30 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
+
+//Recipients
+$phpmailer->setFrom('mailtrap@demomailtrap.com', 'Mailer');
+$phpmailer->addAddress('nilay@devzila.com', 'Devzila');     //Add a recipient
+// $phpmailer->addAddress('ellen@example.com');               //Name is optional
+//$phpmailer->addReplyTo('info@example.com', 'Information');
+//$phpmailer->addCC('cc@example.com');
+//$phpmailer->addBCC('bcc@example.com');
+
+
+//Content
+$phpmailer->isHTML(true);                                  //Set email format to HTML
+$phpmailer->Subject = "New lead generated on: $source";
+$phpmailer->Body    = json_encode($_REQUEST);
+$phpmailer->AltBody = json_encode($_REQUEST);
+
+$phpmailer->send();
+echo 'Message has been sent';
+
+
+
+
+
+
 
 // Function to get the client IP address
 function get_client_ip() {
