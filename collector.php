@@ -47,7 +47,7 @@ $conn->close();
 //Recipients
 $phpmailer->setFrom('mailtrap@demomailtrap.com', 'Mailer');
 $phpmailer->addAddress('nilay@devzila.com', 'Devzila');     //Add a recipient
-$phpmailer->addAddress('devzila@gmail.com');               //Name is optional
+//$phpmailer->addAddress('devzila@gmail.com');               //Name is optional
 //$phpmailer->addReplyTo('info@example.com', 'Information');
 //$phpmailer->addCC('cc@example.com');
 //$phpmailer->addBCC('bcc@example.com');
